@@ -13,8 +13,9 @@ type Dictionary struct {
 	anagrams map[string][]string
 }
 
-// AddWords ...
-func (d *Dictionary) AddWords(words []string) {
+// SetWords ...
+func (d *Dictionary) SetWords(words []string) {
+	d.anagrams = make(map[string][]string)
 	for i := 0; i < len(words); i++ {
 		d.mutex.Lock()
 		d.anagrams[words[i]] = append(d.anagrams[words[i]], words[i])
@@ -33,7 +34,8 @@ func (d *Dictionary) AddWords(words []string) {
 // FindAnagrams ...
 func (d *Dictionary) FindAnagrams(word string) []string {
 	d.mutex.Lock()
-	defer d.mutex.Unlock()
+	anagrams := d.anagrams[word]
+	d.mutex.Unlock()
 
-	return d.anagrams[word]
+	return anagrams
 }

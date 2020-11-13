@@ -31,7 +31,7 @@ func TestAddWords(t *testing.T) {
 
 	s := NewStore()
 	d := s.Dictionary().(*Dictionary)
-	d.AddWords(words)
+	d.SetWords(words)
 
 	assert.Equal(t, expectedAnagrams, d.anagrams)
 }
@@ -50,7 +50,7 @@ func TestFindAnagrams(t *testing.T) {
 
 	s := NewStore()
 	d := s.Dictionary().(*Dictionary)
-	d.AddWords(words)
+	d.SetWords(words)
 
 	for word, anagrams := range expectedAnagrams {
 		assert.Equal(t, anagrams, d.FindAnagrams(word))

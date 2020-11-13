@@ -2,6 +2,6 @@ package store
 
 // Dictionary ...
 type Dictionary interface {
-	AddWords([]string)
+	SetWords([]string)
 	FindAnagrams(string) []string
 }
