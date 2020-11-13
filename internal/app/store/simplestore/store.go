@@ -1,6 +1,8 @@
 package simplestore
 
 import (
+	"sync"
+
 	"github.com/kapustaprusta/anagram_service/internal/app/store"
 )
 
@@ -18,6 +20,7 @@ func NewStore() *Store {
 func (s *Store) Dictionary() store.Dictionary {
 	if s.dictionary == nil {
 		s.dictionary = &Dictionary{
+			mutex:    &sync.Mutex{},
 			anagrams: make(map[string][]string),
 		}
 	}
