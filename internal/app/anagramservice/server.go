@@ -5,13 +5,11 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	"github.com/kapustaprusta/anagram_service/internal/app/store"
 )
 
 type server struct {
-	store  store.Store
-	router *mux.Router
+	store store.Store
 }
 
 func newServer(store store.Store) *server {
