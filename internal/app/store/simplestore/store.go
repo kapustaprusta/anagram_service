@@ -6,17 +6,17 @@ import (
 	"github.com/kapustaprusta/anagram_service/internal/app/store"
 )
 
-// Store ...
+// Store implement the interface of store.Store
 type Store struct {
-	dictionary *Dictionary
+	dictionary *Dictionary // instance of dictionary
 }
 
-// NewStore ...
+// NewStore create and return instance of Store
 func NewStore() *Store {
 	return &Store{}
 }
 
-// Dictionary ...
+// Dictionary return instance of store.Dictionary in case of store.Dictionary is not exist will create it
 func (s *Store) Dictionary() store.Dictionary {
 	if s.dictionary == nil {
 		s.dictionary = &Dictionary{
