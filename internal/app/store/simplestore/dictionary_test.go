@@ -19,14 +19,10 @@ var (
 )
 
 func TestAddWords(t *testing.T) {
-	expectedAnagrams := map[string][]string{
-		"Abba":   {"Abba", "BaBa"},
-		"BaBa":   {"Abba", "BaBa"},
-		"живу":   {"живу", "вижу"},
-		"вижу":   {"живу", "вижу"},
-		"foobar": {"foobar", "barfoo", "boofar"},
-		"barfoo": {"foobar", "barfoo", "boofar"},
-		"boofar": {"foobar", "barfoo", "boofar"},
+	expectedAnagrams := map[int][]string{
+		390:  {"Abba", "BaBa"},
+		633:  {"foobar", "barfoo", "boofar"},
+		1508: {"живу", "вижу"},
 	}
 
 	s := NewStore()
