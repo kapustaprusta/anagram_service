@@ -3,6 +3,7 @@ package anagramservice
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/kapustaprusta/anagram_service/internal/app/store"
@@ -19,6 +20,7 @@ func newServer(store store.Store) *server {
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Printf("from: %s request: %s method: %s\n", r.RemoteAddr, r.RequestURI, r.Method)
 	switch r.URL.Path {
 	case "/get":
 		s.handleGet(w, r)
@@ -34,8 +36,13 @@ func (s *server) handleGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	word := r.URL.Query()["word"][0]
-	anagrams := s.store.Dictionary().FindAnagrams(word)
+	wordQuery := r.URL.Query()["word"]
+	if len(wordQuery) == 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	anagrams := s.store.Dictionary().FindAnagrams(wordQuery[0])
 	anagramsRaw, err := json.Marshal(&anagrams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

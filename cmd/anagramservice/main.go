@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 
 	"github.com/BurntSushi/toml"
@@ -26,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("listen at ", config.BindAddr)
+	log.Println("start listening at", config.BindAddr)
 	if err := anagramservice.Start(config); err != nil {
 		log.Fatal(err)
 	}
