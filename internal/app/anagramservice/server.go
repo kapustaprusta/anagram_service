@@ -26,6 +26,8 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.handleGet(w, r)
 	case "/load":
 		s.handleLoad(w, r)
+	default:
+		w.WriteHeader(http.StatusNotFound)
 	}
 }
 

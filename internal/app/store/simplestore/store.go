@@ -21,7 +21,7 @@ func (s *Store) Dictionary() store.Dictionary {
 	if s.dictionary == nil {
 		s.dictionary = &Dictionary{
 			mutex:    &sync.Mutex{},
-			anagrams: make(map[string][]string),
+			anagrams: make(map[int][]string),
 		}
 	}
 

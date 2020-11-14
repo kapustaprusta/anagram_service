@@ -40,11 +40,13 @@ func TestFindAnagrams(t *testing.T) {
 	expectedAnagrams := map[string][]string{
 		"test":   nil,
 		"Abba":   {"Abba", "BaBa"},
+		"abba":   {"Abba", "BaBa"},
 		"BaBa":   {"Abba", "BaBa"},
 		"живу":   {"живу", "вижу"},
 		"вижу":   {"живу", "вижу"},
 		"foobar": {"foobar", "barfoo", "boofar"},
 		"barfoo": {"foobar", "barfoo", "boofar"},
+		"OOFBAR": {"foobar", "barfoo", "boofar"},
 		"boofar": {"foobar", "barfoo", "boofar"},
 	}
 
