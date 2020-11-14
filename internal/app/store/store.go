@@ -1,6 +1,7 @@
 package store
 
-// Store is an object that can store and return a dictionary
+// Store ...
 type Store interface {
-	Dictionary() Dictionary
+	SetDictionary([]string)
+	Anagrams(string) []string
 }
