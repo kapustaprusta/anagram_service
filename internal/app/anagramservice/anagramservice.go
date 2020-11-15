@@ -3,10 +3,15 @@ package anagramservice
 import (
 	"net/http"
 
+	"github.com/kapustaprusta/anagram_service/internal/app/solver/anagramsolver"
 	"github.com/kapustaprusta/anagram_service/internal/app/store/simplestore"
 )
 
-// Start launch server with configuration
+// Start launches the server
+// with corresponding configuration
 func Start(config *Config) error {
-	return http.ListenAndServe(config.BindAddr, newServer(simplestore.NewStore()))
+	solver := anagramsolver.NewSolver()
+	store := simplestore.NewStore(solver)
+
+	return http.ListenAndServe(config.BindAddr, newServer(store))
 }

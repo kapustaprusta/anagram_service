@@ -1,7 +1,7 @@
 package solver
 
-// Solver ...
+// Solver declares the interface
+// which conatains Solve method
 type Solver interface {
-	ClearCache()
 	Solve(string, string) bool
 }

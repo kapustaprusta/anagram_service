@@ -1,10 +1,10 @@
 package simplestore
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/kapustaprusta/anagram_service/internal/app/solver/anagramsolver"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -19,19 +19,105 @@ var (
 	}
 )
 
-func TestAnagrams(t *testing.T) {
-	solver := anagramsolver.NewSolver()
-	store := NewStore(solver)
+func TestSetDictionry(t *testing.T) {
+	store := NewStore(anagramsolver.NewSolver())
 	store.SetDictionary(dictionary)
-	fmt.Println(store.Anagrams(dictionary[0]))
+	assert.Equal(t, []string{"живу", "вижу"}, store.GetAnagrams("жуви"))
+
+	var expected []string
+	store.SetDictionary(dictionary[2:])
+	assert.Equal(t, expected, store.GetAnagrams("жуви"))
 }
 
-func BenchmarkAnagrams(b *testing.B) {
+func TestGetAnagrams(t *testing.T) {
+	store := NewStore(anagramsolver.NewSolver())
+	store.SetDictionary(dictionary)
+	tests := []struct {
+		word     string
+		expected []string
+	}{
+		{
+			word: "foobar",
+			expected: []string{
+				"foobar",
+				"boofar",
+				"barfoo",
+			},
+		},
+		{
+			word: "FOObar",
+			expected: []string{
+				"foobar",
+				"boofar",
+				"barfoo",
+			},
+		},
+		{
+			word: "rabfoo",
+			expected: []string{
+				"foobar",
+				"boofar",
+				"barfoo",
+			},
+		},
+		{
+			word: "abba",
+			expected: []string{
+				"AbbA",
+				"aBBa",
+			},
+		},
+		{
+			word: "ABBA",
+			expected: []string{
+				"AbbA",
+				"aBBa",
+			},
+		},
+		{
+			word: "baba",
+			expected: []string{
+				"AbbA",
+				"aBBa",
+			},
+		},
+		{
+			word: "живу",
+			expected: []string{
+				"живу",
+				"вижу",
+			},
+		},
+		{
+			word: "жИВу",
+			expected: []string{
+				"живу",
+				"вижу",
+			},
+		},
+		{
+			word: "жуви",
+			expected: []string{
+				"живу",
+				"вижу",
+			},
+		},
+		{
+			word: "yoda",
+		},
+	}
+
+	for _, test := range tests {
+		assert.Equal(t, test.expected, store.GetAnagrams(test.word))
+	}
+}
+
+func BenchmarkGetAnagrams(b *testing.B) {
 	solver := anagramsolver.NewSolver()
 	store := NewStore(solver)
 	store.SetDictionary(dictionary)
 
 	for i := 0; i < b.N; i++ {
-		store.Anagrams(dictionary[2])
+		store.GetAnagrams("foobar")
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"unicode/utf8"
 )
 
-// RuneSlice ...
+// RuneSlice declares slice of runes
 type RuneSlice []rune
 
 func (r RuneSlice) Len() int {
@@ -32,25 +32,22 @@ func stringToRuneSlice(s string) RuneSlice {
 	return r
 }
 
-// AnagramSolver ...
+// AnagramSolver implements the
+// interface of solver.Solver
+// with caching of processed words
 type AnagramSolver struct {
 	wordsCache map[string]RuneSlice
 }
 
-// NewSolver ...
+// NewSolver returns pointer
+// to the AnagramSolver
 func NewSolver() *AnagramSolver {
 	return &AnagramSolver{
 		wordsCache: make(map[string]RuneSlice),
 	}
 }
 
-// ClearCache ...
-func (s *AnagramSolver) ClearCache() {
-	// Clear words cache
-	s.wordsCache = make(map[string]RuneSlice)
-}
-
-// Solve ...
+// Solve defines that strings are anagrams
 func (s *AnagramSolver) Solve(s1 string, s2 string) bool {
 	// Check length
 	if len(s1) != len(s2) {
@@ -64,19 +61,17 @@ func (s *AnagramSolver) Solve(s1 string, s2 string) bool {
 
 	if r1, isExist = s.wordsCache[s1]; !isExist {
 		r1 = stringToRuneSlice(strings.ToLower(s1))
+		sort.Sort(r1)
 		s.wordsCache[s1] = r1
 	}
 
 	if r2, isExist = s.wordsCache[s2]; !isExist {
 		r2 = stringToRuneSlice(strings.ToLower(s2))
+		sort.Sort(r2)
 		s.wordsCache[s2] = r2
 	}
 
-	// Sort slices
-	sort.Sort(r1)
-	sort.Sort(r2)
-
-	// Find difference between runes
+	//Find difference between runes
 	for i := 0; i < len(r1); i++ {
 		if r1[i] != r2[i] {
 			return false

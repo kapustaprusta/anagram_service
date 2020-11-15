@@ -44,7 +44,7 @@ func (s *server) handleGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	anagrams := s.store.Dictionary().FindAnagrams(wordQuery[0])
+	anagrams := s.store.GetAnagrams(wordQuery[0])
 	anagramsRaw, err := json.Marshal(&anagrams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -80,6 +80,6 @@ func (s *server) handleLoad(w http.ResponseWriter, r *http.Request) {
 		words = append(words, word.(string))
 	}
 
-	s.store.Dictionary().SetWords(words)
+	s.store.SetDictionary(words)
 	w.WriteHeader(http.StatusOK)
 }

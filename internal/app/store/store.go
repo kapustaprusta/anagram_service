@@ -1,7 +1,9 @@
 package store
 
-// Store ...
+// Store declares the interface
+// which contains SetDictionary
+// and GetAnagrams methods
 type Store interface {
 	SetDictionary([]string)
-	Anagrams(string) []string
+	GetAnagrams(string) []string
 }
